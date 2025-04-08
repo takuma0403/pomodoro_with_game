@@ -9,13 +9,8 @@ type Phase = "work-before" | "work-running" | "break-before" | "break-running";
 
 export const PomodoroTimer = () => {
   const [phase, setPhase] = useState<Phase>("work-before");
-  const {
-    secondsLeft,
-    isRunning,
-    start,
-    pause,
-    reset,
-  } = useTimer(WORK_DURATION);
+  const { secondsLeft, isRunning, start, pause, reset } =
+    useTimer(WORK_DURATION);
 
   useEffect(() => {
     if (secondsLeft === 0 && isRunning) {
@@ -26,7 +21,7 @@ export const PomodoroTimer = () => {
         setPhase("work-before");
       }
     }
-  }, [secondsLeft]);
+  }, [secondsLeft, isRunning, pause, phase]);
 
   const handleStart = () => {
     if (phase === "work-before") {
@@ -50,10 +45,11 @@ export const PomodoroTimer = () => {
     reset(WORK_DURATION);
     setPhase("work-before");
   };
-  
 
   const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const m = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
     const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
@@ -75,10 +71,21 @@ export const PomodoroTimer = () => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "2rem" }}>
-      <h1>{formatTime(secondsLeft)}</h1>
+      <h1>
+        {" "}
+        {formatTime(
+          phase === "work-before"
+            ? WORK_DURATION
+            : phase === "break-before"
+            ? BREAK_DURATION
+            : secondsLeft
+        )}
+      </h1>
       <h2>{getPhaseLabel()}</h2>
 
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+      >
         {(phase === "work-before" || phase === "break-before") && (
           <DotIconButton type="play" onClick={handleStart} />
         )}
