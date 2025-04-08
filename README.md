@@ -8,14 +8,15 @@
   - 25分間どのくらい集中していたかを評価するUIを5分休憩の前に表示する
     - できれば過去の集中記録みたいなのつけたい気持ちがある（バックエンド実装の話なのであくまでお気持ち）
 
-### 環境構築手順
+## 環境構築手順
   
-  **前提**  
+### 前提
   1. nodeJSのバージョンが21以上であること
   2. 開発OSがubuntuであること（windos, macでの開発動作未確認）
   
-  **構築手順**  
+### 構築手順
     frontend  
+
   1. リポジトリのクローン  
     <pre> ``` git clone git@github.com:takuma0403/pomodoro_with_game.git ``` </pre>
   2. ディレクトリ移動  
@@ -24,3 +25,6 @@
     <pre> ``` npm install ``` </pre>
   4. サーバー起動  
     <pre> ``` npm run dev ``` </pre>
+
+## 参考リンク
+  - [DotGen.css - CSS Collection](https://bcrikko.github.io/css-collection/tool/dotgen/index.html)
