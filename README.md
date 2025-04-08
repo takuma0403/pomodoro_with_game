@@ -17,10 +17,10 @@
   **構築手順**  
     frontend  
   1. リポジトリのクローン  
-    ``` git clone git@github.com:takuma0403/pomodoro_with_game.git ```
+    <pre> ``` git clone git@github.com:takuma0403/pomodoro_with_game.git ``` </pre>
   2. ディレクトリ移動  
-    ``` cd front ```
+    <pre> ``` cd front ``` </pre>
   3. node_modules 構築  
-    ``` npm install ```
+    <pre> ``` npm install ``` </pre>
   4. サーバー起動  
-    ``` npm run dev ```
+    <pre> ``` npm run dev ``` </pre>
