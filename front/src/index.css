@@ -23,9 +23,11 @@ body {
 }
 
 h1{
-  font-size: 40px;
+  font-size: 48px;
+  min-height: 60px;
 }
 
 h2{
-  font-size: 24px
+  font-size: 12px;
+  min-height: 36px;
 }
