@@ -2,15 +2,22 @@ import { useEffect, useState } from "react";
 import { useTimer } from "../hooks/useTimer";
 import DotIconButton from "./DotIconButton";
 
-const WORK_DURATION = 25 * 60;
-const BREAK_DURATION = 5 * 60;
-
 type Phase = "work-before" | "work-running" | "break-before" | "break-running";
 
-export const PomodoroTimer = () => {
+type PomodoroTimerProps = {
+  workDuration?: number;
+  breakDuration?: number;
+  onSecondsChange?: (seconds: number) => void;
+};
+
+export const PomodoroTimer = ({
+  workDuration = 25 * 60,
+  breakDuration = 5 * 60,
+  onSecondsChange,
+}: PomodoroTimerProps) => {
   const [phase, setPhase] = useState<Phase>("work-before");
   const { secondsLeft, isRunning, start, pause, reset } =
-    useTimer(WORK_DURATION);
+    useTimer(workDuration);
 
   useEffect(() => {
     if (secondsLeft === 0 && isRunning) {
@@ -23,13 +30,19 @@ export const PomodoroTimer = () => {
     }
   }, [secondsLeft, isRunning, pause, phase]);
 
+  useEffect(() => {
+    if (onSecondsChange) {
+      onSecondsChange(secondsLeft);
+    }
+  }, [secondsLeft, onSecondsChange]);
+
   const handleStart = () => {
     if (phase === "work-before") {
-      reset(WORK_DURATION);
+      reset(workDuration);
       setPhase("work-running");
       start();
     } else if (phase === "break-before") {
-      reset(BREAK_DURATION);
+      reset(breakDuration);
       setPhase("break-running");
       start();
     } else {
@@ -42,7 +55,7 @@ export const PomodoroTimer = () => {
   };
 
   const handleReset = () => {
-    reset(WORK_DURATION);
+    reset(workDuration);
     setPhase("work-before");
   };
 
@@ -75,9 +88,9 @@ export const PomodoroTimer = () => {
         {" "}
         {formatTime(
           phase === "work-before"
-            ? WORK_DURATION
+            ? workDuration
             : phase === "break-before"
-            ? BREAK_DURATION
+            ? breakDuration
             : secondsLeft
         )}
       </h1>
