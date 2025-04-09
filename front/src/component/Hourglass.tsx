@@ -1,4 +1,4 @@
-import styles from './hourglass.module.css'
+import styles from './Hourglass.module.css'
 
 export const HourglassTimer = () => {
 
