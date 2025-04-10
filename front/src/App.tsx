@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { HourglassTimer } from "./component/Hourglass";
 import { PomodoroTimer, Phase } from "./component/PomodoroTimer";
+import { ToDoMemoBox } from "./component/ToDoMemoBox";
 
 import "./App.css";
 
@@ -23,6 +24,7 @@ function App() {
         onSecondsChange={setSeconds}
         onPhaseChange={setPhase}
       />
+      <ToDoMemoBox/>
     </>
   );
 }
