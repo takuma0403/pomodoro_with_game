@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./DotIconButton.module.css";
+import styles from "../styles/DotIconButton.module.css";
 
 type DotIconButtonProps = {
   type: "play" | "pause" | "reset";

@@ -1,4 +1,4 @@
-import styles from "./ToDoMemoBox.module.css";
+import styles from "../styles/ToDoMemoBox.module.css";
 
 export const ToDoMemoBox = () => {
   return (
