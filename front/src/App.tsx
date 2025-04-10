@@ -10,6 +10,8 @@ function App() {
 
   const [seconds, setSeconds] = useState(0);
 
+  console.log(seconds)
+
   return (
     <>
       <HourglassTimer />
