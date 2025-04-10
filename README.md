@@ -15,7 +15,7 @@
   2. 開発OSがubuntuであること（windos, macでの開発動作未確認）
   
 ### 構築手順
-    frontend  
+  frontend
 
   1. リポジトリのクローン  
     <pre> ``` git clone git@github.com:takuma0403/pomodoro_with_game.git ``` </pre>
