@@ -8,8 +8,8 @@ import { Phase } from "./types/type";
 import "./App.css";
 
 function App() {
-  const WORK_DURATION = 0.1 * 60;
-  const BREAK_DURATION = 0.1 * 60;
+  const WORK_DURATION = 25 * 60;
+  const BREAK_DURATION = 5 * 60;
 
   const timerRef = useRef<PomodoroTimerHandle>(null);
 
