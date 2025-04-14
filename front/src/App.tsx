@@ -8,8 +8,8 @@ import { Phase } from "./types/type";
 import "./App.css";
 
 function App() {
-  const WORK_DURATION = 25 * 60;
-  const BREAK_DURATION = 5 * 60;
+  const WORK_DURATION = 0.1 * 60;
+  const BREAK_DURATION = 0.1 * 60;
 
   const timerRef = useRef<PomodoroTimerHandle>(null);
 
@@ -32,8 +32,8 @@ function App() {
     setIsRunning(false);
   };
 
-  console.log("残り", seconds, "秒")
-  console.log("now", phase)
+  console.log("残り", seconds, "秒");
+  console.log("now", phase);
 
   return (
     <>
@@ -52,7 +52,7 @@ function App() {
         onPause={handlePause}
         onReset={handleReset}
       />
-      <ToDoMemoBox />
+      <ToDoMemoBox phase={phase} />
     </>
   );
 }
