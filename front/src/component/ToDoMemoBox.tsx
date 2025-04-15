@@ -42,15 +42,13 @@ export const ToDoMemoBox = ({ onPhaseChange, phase }: ToDoMemoBoxProps) => {
     isVisible && (
       <div className={styles.container}>
         <div className={styles.label}>ToDo</div>
+        <MiniDotIconButton type="trashCan" onClick={handleClearText} />
         <div className={styles.textbox}>
           <textarea
             className={styles.textarea}
             value={text}
             onChange={(e) => setText(e.target.value)}
           ></textarea>
-        </div>
-        <div className={styles.trashButtonContainer}>
-          <MiniDotIconButton type="trashCan" onClick={handleClearText} />
         </div>
       </div>
     )
