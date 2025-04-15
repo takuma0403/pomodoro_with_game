@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/ToDoMemoBox.module.css";
 import { Phase } from "../types/type";
+import { MiniDotIconButton } from "./DotIconButton";
 
 type ToDoMemoBoxProps = {
   onPhaseChange?: (phase: Phase) => void;
@@ -33,6 +34,10 @@ export const ToDoMemoBox = ({ onPhaseChange, phase }: ToDoMemoBoxProps) => {
     onPhaseChange?.(phase);
   }, [phase, onPhaseChange]);
 
+  const handleClearText = () => {
+    setText("");
+  };
+
   return (
     isVisible && (
       <div className={styles.container}>
@@ -43,6 +48,9 @@ export const ToDoMemoBox = ({ onPhaseChange, phase }: ToDoMemoBoxProps) => {
             value={text}
             onChange={(e) => setText(e.target.value)}
           ></textarea>
+        </div>
+        <div className={styles.trashButtonContainer}>
+          <MiniDotIconButton type="trashCan" onClick={handleClearText} />
         </div>
       </div>
     )

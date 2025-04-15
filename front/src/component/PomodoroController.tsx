@@ -1,4 +1,4 @@
-import DotIconButton from "./DotIconButton";
+import { DotIconButton } from "./DotIconButton";
 import { Phase } from "../types/type";
 
 type PomodoroControllerProps = {

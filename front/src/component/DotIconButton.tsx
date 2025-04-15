@@ -6,7 +6,7 @@ type DotIconButtonProps = {
   onClick?: () => void;
 };
 
-const DotIconButton: React.FC<DotIconButtonProps> = ({ type, onClick }) => {
+export const DotIconButton: React.FC<DotIconButtonProps> = ({ type, onClick }) => {
   const dotClass = {
     play: styles.playDot,
     pause: styles.pauseDot,
@@ -18,4 +18,17 @@ const DotIconButton: React.FC<DotIconButtonProps> = ({ type, onClick }) => {
   );
 };
 
-export default DotIconButton;
+type MiniDotIconButtonProps = {
+  type: "trashCan";
+  onClick?: () => void;
+};
+
+export const MiniDotIconButton: React.FC<MiniDotIconButtonProps> = ({ type, onClick }) => {
+  const dotClass = {
+    trashCan: styles.trashCanDotMini,
+  }[type];
+
+  return (
+    <button className={`${styles.miniIconButton} ${dotClass}`} onClick={onClick}></button>
+  )
+}
