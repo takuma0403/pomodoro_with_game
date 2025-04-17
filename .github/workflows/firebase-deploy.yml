@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - main  # main ブランチに push 時に発動
+      - main
 
 jobs:
   build-and-deploy:
@@ -13,20 +13,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '21'
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./front
 
-      - name: Build
+      - name: Build project
         run: npm run build
+        working-directory: ./front
 
-      - name: Deploy to Firebase
+      - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: ${{ secrets.FIREBASE_TOKEN }}
+          firebaseServiceAccount: "${{ secrets.FIREBASE_TOKEN }}"
           channelId: live
+        env:
+          FIREBASE_CLI_EXPERIMENTS: hostingchannels
+        working-directory: ./front
