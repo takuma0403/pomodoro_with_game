@@ -25,7 +25,7 @@ type MiniDotIconButtonProps = {
 
 export const MiniDotIconButton: React.FC<MiniDotIconButtonProps> = ({ type, onClick }) => {
   const dotClass = {
-    trashCan: styles.trashCanDotMini,
+    trashCan: styles.resetDotMini,
   }[type];
 
   return (
