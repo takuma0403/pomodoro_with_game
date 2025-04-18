@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useImperativeHandle, useState, forwardRef } from "react";
+import { useCallback, useEffect, useImperativeHandle, useRef, useState, forwardRef } from "react";
 import { useTimer } from "../hooks/useTimer";
 import { Phase } from "../types/type";
+
+import notificationSound from "../assets/iwashiro_May_Be_A_Battle.mp3";
 
 export type PomodoroTimerHandle = {
   startTimer: () => void;
   pauseTimer: () => void;
   resetTimer: () => void;
+  stopAlarm: () => void;
 };
 
 const delayTime = 200;
@@ -13,6 +16,7 @@ const delayTime = 200;
 type PomodoroTimerProps = {
   workDuration?: number;
   breakDuration?: number;
+  volume?: number;
   onSecondsChange?: (seconds: number) => void;
   onPhaseChange?: (phase: Phase) => void;
 };
@@ -22,6 +26,7 @@ export const PomodoroTimer = forwardRef<PomodoroTimerHandle, PomodoroTimerProps>
     {
       workDuration = 25 * 60,
       breakDuration = 5 * 60,
+      volume = 1.0,
       onSecondsChange,
       onPhaseChange,
     },
@@ -29,6 +34,20 @@ export const PomodoroTimer = forwardRef<PomodoroTimerHandle, PomodoroTimerProps>
   ) => {
     const [phase, setPhase] = useState<Phase>("work-before");
     const { secondsLeft, isRunning, start, pause, reset } = useTimer(workDuration);
+
+    const audioRef = useRef<HTMLAudioElement>(new Audio(notificationSound));
+
+    // 初期設定（ループ＆音量）
+    useEffect(() => {
+      audioRef.current.loop = true;
+      audioRef.current.volume = volume;
+    }, [volume]);
+
+    const showNotification = (title: string, body: string) => {
+      if (Notification.permission === "granted") {
+        new Notification(title, { body });
+      }
+    };
 
     const getPhaseLabel = useCallback(() => {
       switch (phase) {
@@ -50,6 +69,14 @@ export const PomodoroTimer = forwardRef<PomodoroTimerHandle, PomodoroTimerProps>
     useEffect(() => {
       if (secondsLeft === 0 && isRunning) {
         pause();
+
+        if (phase === "work-running") {
+          showNotification("作業終了", "Let's Play a Game !!");
+          audioRef.current.play();
+        } else if (phase === "break-running") {
+          showNotification("休憩終了", "You Should Work Now !!");
+        }
+
         setTimeout(() => {
           if (phase === "work-running") {
             setPhase("break-before");
@@ -75,7 +102,6 @@ export const PomodoroTimer = forwardRef<PomodoroTimerHandle, PomodoroTimerProps>
       }, delayTime);
     }, [phase, getPhaseLabel]);
 
-    // 外部から呼び出せる操作
     useImperativeHandle(ref, () => ({
       startTimer() {
         if (phase === "work-before") {
@@ -85,6 +111,8 @@ export const PomodoroTimer = forwardRef<PomodoroTimerHandle, PomodoroTimerProps>
         } else if (phase === "break-before") {
           reset(breakDuration);
           setPhase("break-running");
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
           start();
         } else {
           start();
@@ -96,6 +124,10 @@ export const PomodoroTimer = forwardRef<PomodoroTimerHandle, PomodoroTimerProps>
       resetTimer() {
         reset(workDuration);
         setPhase("work-before");
+      },
+      stopAlarm() {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
       },
     }));
 
