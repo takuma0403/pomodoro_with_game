@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { HourglassTimer } from "./component/Hourglass";
 import { PomodoroTimer, PomodoroTimerHandle } from "./component/PomodoroTimer";
 import { PomodoroController } from "./component/PomodoroController";
@@ -8,7 +8,7 @@ import { Phase } from "./types/type";
 import "./App.css";
 
 function App() {
-  const WORK_DURATION = 25 * 60;
+  const WORK_DURATION = 0.1 * 60;
   const BREAK_DURATION = 5 * 60;
 
   const timerRef = useRef<PomodoroTimerHandle>(null);
@@ -20,6 +20,11 @@ function App() {
   const handleStart = () => {
     timerRef.current?.startTimer();
     setIsRunning(true);
+
+    // 休憩が開始されたタイミングでアラームを止める、暫定処理
+    if (phase === "break-before") {
+      timerRef.current?.stopAlarm();
+    }
   };
 
   const handlePause = () => {
@@ -31,6 +36,12 @@ function App() {
     timerRef.current?.resetTimer();
     setIsRunning(false);
   };
+
+  useEffect(() => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  }, []);
 
   console.log("残り", seconds, "秒");
   console.log("now", phase);
@@ -44,6 +55,7 @@ function App() {
         breakDuration={BREAK_DURATION}
         onSecondsChange={setSeconds}
         onPhaseChange={setPhase}
+        volume={0.5}
       />
       <PomodoroController
         phase={phase}
