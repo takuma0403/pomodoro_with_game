@@ -8,7 +8,7 @@ export type PomodoroTimerHandle = {
   startTimer: () => void;
   pauseTimer: () => void;
   resetTimer: () => void;
-  stopAlarm: () => void; // 🔔 アラーム停止
+  stopAlarm: () => void;
 };
 
 const delayTime = 200;
@@ -16,7 +16,7 @@ const delayTime = 200;
 type PomodoroTimerProps = {
   workDuration?: number;
   breakDuration?: number;
-  volume?: number; // 🔊 音量 0.0〜1.0
+  volume?: number;
   onSecondsChange?: (seconds: number) => void;
   onPhaseChange?: (phase: Phase) => void;
 };
